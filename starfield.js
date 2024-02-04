@@ -13,11 +13,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const starArray = [];
 
     for (let i = 0; i < stars; i++) {
+        const angle = Math.random() * 2 * Math.PI; // Random angle
         starArray.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
+            x: canvas.width / 2,
+            y: canvas.height / 2,
             size: Math.random(),
-            speed: Math.random() * 3 + 1
+            speed: Math.random() * 3 + 1,
+            dx: Math.cos(angle),
+            dy: Math.sin(angle)
         });
     }
 
@@ -28,10 +31,13 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.beginPath();
             ctx.arc(star.x, star.y, star.size, 0, 2 * Math.PI);
             ctx.fill();
-            star.y -= star.speed;
-            if (star.y < 0) {
-                star.y = canvas.height;
-                star.x = Math.random() * canvas.width;
+            // Update star position based on its direction (dx, dy) and speed
+            star.x += star.dx * star.speed;
+            star.y += star.dy * star.speed;
+            // Reset star to center if it goes out of bounds
+            if (star.x < 0 || star.x > canvas.width || star.y < 0 || star.y > canvas.height) {
+                star.x = canvas.width / 2;
+                star.y = canvas.height / 2;
             }
         });
         requestAnimationFrame(drawStars);
