@@ -1,2 +1,3 @@
 # stirlo.space
-simple html-css code for a star field
+simple html-css/js code for a star field
+add WebFinger ASAP
