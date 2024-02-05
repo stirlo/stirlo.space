@@ -18,26 +18,43 @@ document.addEventListener('DOMContentLoaded', () => {
             x: canvas.width / 2,
             y: canvas.height / 2,
             size: Math.random(),
-            speed: Math.random() * 3 + 1,
+            speed: Math.random() * 5 + 1, // Increased speed range for more variation
             dx: Math.cos(angle),
-            dy: Math.sin(angle)
+            dy: Math.sin(angle),
+            brightness: Math.random() * 255
         });
     }
 
     function drawStars() {
-        ctx.fillStyle = 'white';
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         starArray.forEach(star => {
             ctx.beginPath();
-            ctx.arc(star.x, star.y, star.size, 0, 2 * Math.PI);
+            // Calculate distance from center to simulate acceleration
+            const distance = Math.sqrt(Math.pow(star.x - canvas.width / 2, 2) + Math.pow(star.y - canvas.height / 2, 2));
+            const acceleration = Math.min(10, distance / 100);
+
+            // Update star size based on acceleration
+            const starSize = Math.min(star.size * acceleration, 3); // Limit max size to prevent overgrowth
+
+            // Draw star with gradient to simulate brightness
+            const gradient = ctx.createRadialGradient(star.x, star.y, 0, star.x, star.y, starSize);
+            gradient.addColorStop(0, `rgba(255, 255, 255, ${star.brightness / 255})`);
+            gradient.addColorStop(1, "transparent");
+
+            ctx.fillStyle = gradient;
+            ctx.arc(star.x, star.y, starSize, 0, 2 * Math.PI);
             ctx.fill();
+
             // Update star position based on its direction (dx, dy) and speed
-            star.x += star.dx * star.speed;
-            star.y += star.dy * star.speed;
+            star.x += star.dx * star.speed * acceleration;
+            star.y += star.dy * star.speed * acceleration;
+
             // Reset star to center if it goes out of bounds
             if (star.x < 0 || star.x > canvas.width || star.y < 0 || star.y > canvas.height) {
                 star.x = canvas.width / 2;
                 star.y = canvas.height / 2;
+                star.speed = Math.random() * 5 + 1; // Reset speed for variety
+                star.size = Math.random(); // Reset size for variety
             }
         });
         requestAnimationFrame(drawStars);
