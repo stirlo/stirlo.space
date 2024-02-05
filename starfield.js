@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('starfield');
     const ctx = canvas.getContext('2d');
     let stars = [];
-    const numStars = 500;
+    const numStars = 2000; // Increased number of stars
     const centerNullRadius = 50; // Radius of the central "null" area
 
     function resizeCanvas() {
@@ -15,15 +15,22 @@ document.addEventListener('DOMContentLoaded', () => {
         stars = [];
         for (let i = 0; i < numStars; i++) {
             const angle = Math.random() * 2 * Math.PI;
-            const radius = Math.random() * Math.max(canvas.width, canvas.height) / 2 + centerNullRadius; // Ensure stars start outside the null area
+            const radius = Math.random() * Math.max(canvas.width, canvas.height) / 2 + centerNullRadius;
+            const colorChance = Math.random();
+            let color = 'white'; // Default color
+            if (colorChance < 0.02) color = 'blue'; // 2% chance
+            else if (colorChance < 0.04) color = 'red'; // Additional 2% chance
+            else if (colorChance < 0.05) color = 'yellow'; // Additional 1% chance
+
             stars.push({
-                x: canvas.width / 2 + Math.cos(angle) * radius, // Position stars outside the null area
+                x: canvas.width / 2 + Math.cos(angle) * radius,
                 y: canvas.height / 2 + Math.sin(angle) * radius,
                 size: Math.random() * 2 + 0.5,
                 speed: Math.random() * 3 + 1,
                 brightness: Math.random() * 255,
                 dx: Math.cos(angle),
                 dy: Math.sin(angle),
+                color: color,
             });
         }
     }
@@ -37,9 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
             star.y += star.dy * star.speed;
             star.size += 0.02;
 
-            // Calculate distance from the center
             const distance = Math.sqrt(Math.pow(star.x - canvas.width / 2, 2) + Math.pow(star.y - canvas.height / 2, 2));
-            // Reset star if it moves beyond canvas boundaries or enters the null area
             if (distance < centerNullRadius || star.x < 0 || star.x > canvas.width || star.y < 0 || star.y > canvas.height) {
                 const angle = Math.random() * 2 * Math.PI;
                 const radius = Math.random() * Math.max(canvas.width, canvas.height) / 2 + centerNullRadius;
@@ -54,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             ctx.beginPath();
             const brightness = Math.floor(star.brightness).toString();
-            ctx.fillStyle = `rgba(255, 255, 255, ${brightness / 255})`;
+            ctx.fillStyle = `rgba(${star.color === 'white' ? '255, 255, 255' : star.color === 'blue' ? '0, 0, 255' : star.color === 'red' ? '255, 0, 0' : '255, 255, 0'}, ${brightness / 255})`;
             ctx.arc(star.x, star.y, star.size, 0, 2 * Math.PI);
             ctx.fill();
         });
