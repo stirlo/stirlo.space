@@ -60,4 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas(); // Set canvas size and initialize stars on load
+
+     drawStars();
+});
 });
