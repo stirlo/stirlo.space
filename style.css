@@ -1,31 +1,7 @@
-body, html {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background-color: #000;
-}
-
-#stars {
-  width: 1px;
-  height: 1px;
-  background: transparent;
-  box-shadow: 
-    1000px 1000px white,
-    950px 950px white,
-    900px 1500px white,
-    850px 1400px white,
-    /* Add as many stars as you like */
-    1500px 2000px white;
-  animation: fly-through 10s linear infinite;
-}
-
-@keyframes fly-through {
-  from {
-    transform: translateX(0px) translateY(0px);
-  }
-  to {
-    transform: translateX(-1000px) translateY(-1000px);
-  }
+#starfield {
+background-color: black;
+display: block; / Removes the margin. /
+position: absolute;
+top: 0;
+left: 0;
 }
