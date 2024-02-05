@@ -19,9 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const colorChance = Math.random();
         let color = 'white'; // Default color
         // Adjusted chances for colored stars
-        if (colorChance < 0.0002) color = 'blue'; // 0.02% chance
-        else if (colorChance < 0.0004) color = 'red'; // Additional 0.02% chance
-        else if (colorChance < 0.0005) color = 'yellow'; // Additional 0.01% chance
+        if (colorChance < 0.000002) color = 'blue'; // 0.0002% chance
+        else if (colorChance < 0.000004) color = 'red'; // Additional 0.0002% chance
+        else if (colorChance < 0.000005) color = 'yellow'; // Additional 0.0001% chance
 
         stars.push({
             x: canvas.width / 2 + Math.cos(angle) * radius,
