@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctx = canvas.getContext('2d');
 
     let starArray = [];
-    const stars = 2000; // Number of stars
+    const stars = 500; // Number of stars
     const centerCircleRadius = 20; // Radius of the black center circle
 
     function resizeCanvas() {
