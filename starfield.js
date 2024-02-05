@@ -12,28 +12,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function initStars() {
-        stars = [];
-        for (let i = 0; i < numStars; i++) {
-            const angle = Math.random() * 2 * Math.PI;
-            const radius = Math.random() * Math.max(canvas.width, canvas.height) / 2 + centerNullRadius;
-            const colorChance = Math.random();
-            let color = 'white'; // Default color
-            if (colorChance < 0.02) color = 'blue'; // 2% chance
-            else if (colorChance < 0.04) color = 'red'; // Additional 2% chance
-            else if (colorChance < 0.05) color = 'yellow'; // Additional 1% chance
+    stars = [];
+    for (let i = 0; i < numStars; i++) {
+        const angle = Math.random() * 2 * Math.PI;
+        const radius = Math.random() * Math.max(canvas.width, canvas.height) / 2 + centerNullRadius;
+        const colorChance = Math.random();
+        let color = 'white'; // Default color
+        // Adjusted chances for colored stars
+        if (colorChance < 0.0002) color = 'blue'; // 0.02% chance
+        else if (colorChance < 0.0004) color = 'red'; // Additional 0.02% chance
+        else if (colorChance < 0.0005) color = 'yellow'; // Additional 0.01% chance
 
-            stars.push({
-                x: canvas.width / 2 + Math.cos(angle) * radius,
-                y: canvas.height / 2 + Math.sin(angle) * radius,
-                size: Math.random() * 2 + 0.5,
-                speed: Math.random() * 3 + 1,
-                brightness: Math.random() * 255,
-                dx: Math.cos(angle),
-                dy: Math.sin(angle),
-                color: color,
-            });
-        }
+        stars.push({
+            x: canvas.width / 2 + Math.cos(angle) * radius,
+            y: canvas.height / 2 + Math.sin(angle) * radius,
+            size: Math.random() * 2 + 0.5,
+            speed: Math.random() * 3 + 1,
+            brightness: Math.random() * 255,
+            dx: Math.cos(angle),
+            dy: Math.sin(angle),
+            color: color,
+        });
     }
+}
 
     function draw() {
         ctx.fillStyle = 'black';
