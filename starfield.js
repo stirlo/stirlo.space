@@ -16,8 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
             stars.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                size: Math.random(),
+                size: Math.random() * 2 + 0.5, // Slightly larger stars
                 speed: Math.random() * 3 + 1,
+                brightness: Math.random() * 255, // Simulate HDR by varying brightness
             });
         }
     }
@@ -34,13 +35,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (star.x > canvas.width || star.y < 0) {
                 star.x = Math.random() * canvas.width;
                 star.y = canvas.height;
-                star.size = Math.random();
+                star.size = Math.random() * 2 + 0.5;
                 star.speed = Math.random() * 3 + 1;
+                star.brightness = Math.random() * 255; // Reset brightness for HDR effect
             }
 
+            // Use `rgba` to adjust brightness via alpha channel
             ctx.beginPath();
+            const brightness = Math.floor(star.brightness).toString();
+            ctx.fillStyle = `rgba(255, 255, 255, ${brightness / 255})`;
             ctx.arc(star.x, star.y, star.size, 0, 2 * Math.PI);
-            ctx.fillStyle = 'white';
             ctx.fill();
         });
 
