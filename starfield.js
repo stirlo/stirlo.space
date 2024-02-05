@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctx = canvas.getContext('2d');
     let stars = [];
     const numStars = 500;
-    const centerCircleRadius = 20;
 
     function resizeCanvas() {
         canvas.width = window.innerWidth;
@@ -44,12 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.fillStyle = 'white';
             ctx.fill();
         });
-
-        // Draw the central black circle
-        ctx.beginPath();
-        ctx.arc(canvas.width / 2, canvas.height / 2, centerCircleRadius, 0, 2 * Math.PI);
-        ctx.fillStyle = 'black';
-        ctx.fill();
 
         requestAnimationFrame(draw);
     }
