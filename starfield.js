@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    const stars = 500; // Number of stars
+    const stars = 2000; // Number of stars
     const starArray = [];
 
     for (let i = 0; i < stars; i++) {
