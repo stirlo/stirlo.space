@@ -13,12 +13,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function initStars() {
         stars = [];
         for (let i = 0; i < numStars; i++) {
+            const angle = Math.random() * 2 * Math.PI; // Angle for outward movement from center
             stars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                size: Math.random() * 2 + 0.5, // Slightly larger stars
+                x: canvas.width / 2, // Start at the center
+                y: canvas.height / 2,
+                size: Math.random() * 2 + 0.5,
                 speed: Math.random() * 3 + 1,
-                brightness: Math.random() * 255, // Simulate HDR by varying brightness
+                brightness: Math.random() * 255,
+                dx: Math.cos(angle), // Direction based on angle
+                dy: Math.sin(angle),
             });
         }
     }
@@ -28,16 +31,17 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         stars.forEach(star => {
-            star.x += star.speed;
-            star.y -= star.speed * (canvas.height / canvas.width);
-            star.size += 0.02;
+            star.x += star.dx * star.speed; // Move based on direction and speed
+            star.y += star.dy * star.speed;
+            star.size += 0.02; // Gradually increase size for effect
 
-            if (star.x > canvas.width || star.y < 0) {
-                star.x = Math.random() * canvas.width;
-                star.y = canvas.height;
+            // Reset star to center if it moves beyond canvas boundaries
+            if (star.x < 0 || star.x > canvas.width || star.y < 0 || star.y > canvas.height) {
+                star.x = canvas.width / 2;
+                star.y = canvas.height / 2;
                 star.size = Math.random() * 2 + 0.5;
                 star.speed = Math.random() * 3 + 1;
-                star.brightness = Math.random() * 255; // Reset brightness for HDR effect
+                star.brightness = Math.random() * 255;
             }
 
             // Use `rgba` to adjust brightness via alpha channel
