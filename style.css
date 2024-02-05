@@ -1,7 +1,0 @@
-#starfield {
-background-color: black;
-display: block; / Removes the margin. /
-position: absolute;
-top: 0;
-left: 0;
-}
