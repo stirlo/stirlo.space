@@ -65,10 +65,15 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.fill();
         });
 
-        requestAnimationFrame(draw);
+       requestAnimationFrame(draw);
     }
 
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
     requestAnimationFrame(draw);
+
+    // Add click event listener to canvas
+    canvas.addEventListener('click', () => {
+        window.location.href = 'https://stirlo.be';
+    });
 });
