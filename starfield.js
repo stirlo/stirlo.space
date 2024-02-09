@@ -72,8 +72,13 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeCanvas();
     requestAnimationFrame(draw);
 
-    // Add click event listener to canvas
+   // Add click event listener to canvas
     canvas.addEventListener('click', () => {
+        window.location.href = 'https://stirlo.be';
+    });
+
+    // Add keydown event listener to document
+    document.addEventListener('keydown', () => {
         window.location.href = 'https://stirlo.be';
     });
 });
