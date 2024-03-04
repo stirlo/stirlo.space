@@ -100,7 +100,7 @@
     function render() {
         drawScene(gl, programInfo, buffers, zoom, angle, [canvas.width, canvas.height]);
         zoom *= 0.99; // Adjust this value to control the zoom speed. Closer to 1 will be slower.
-        angle += 0.01; // Adjust if you want to change the rotation speed or direction
+        angle += 0.03; // Adjust if you want to change the rotation speed or direction
         requestAnimationFrame(render);
         }
     requestAnimationFrame(render);
