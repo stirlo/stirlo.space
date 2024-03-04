@@ -93,16 +93,26 @@
     // Initialize buffers
     const buffers = initBuffers(gl);
 
-    // Draw the scene
-    let zoom = 1.0;
-    let angle = 0.0;
+
+    // Initial setup for zoom and position
+    let zoom = 0.5; // Start with a broader view to adjust from
+    let angle = 0.1; // Initial angle, adjust if you want to rotate the view
+    // Calculate initial moveX and moveY based on the desired focus point
+    // Assuming the fractal is centered at (0,0) and spans from -2 to 2 in both directions
+    let focusX = -0.75; // X coordinate in the fractal's space
+    let focusY = 0.1; // Y coordinate in the fractal's space
     
     function render() {
-        drawScene(gl, programInfo, buffers, zoom, angle, [canvas.width, canvas.height]);
-        zoom *= 0.99; // Adjust this value to control the zoom speed. Closer to 1 will be slower.
-        angle += 0.03; // Adjust if you want to change the rotation speed or direction
+         // Adjust moveX and moveY based on the focus point and current zoom
+        // This calculation translates the fractal coordinates to WebGL canvas coordinates
+        let moveX = (focusX * canvas.width / 2) * zoom + canvas.width / 2;
+        let moveY = (focusY * canvas.height / 2) * zoom + canvas.height / 2;
+    
+        drawScene(gl, programInfo, buffers, zoom, angle, [canvas.width, canvas.height], moveX, moveY);
+        zoom *= 0.99; // Adjust to zoom in
+        angle += 0.01; // Adjust if you want to change the rotation speed or direction
         requestAnimationFrame(render);
-        }
+    }
     requestAnimationFrame(render);
 
     function initBuffers(gl) {
@@ -154,7 +164,7 @@
         return shader;
     }
 
-    function drawScene(gl, programInfo, buffers, zoom, angle, resolution) {
+    function drawScene(gl, programInfo, buffers, zoom, angle, resolution, moveX, moveY) {
         gl.clearColor(0.0, 0.0, 0.0, 1.0);  // Clear to black, fully opaque
         gl.clearDepth(1.0);                 // Clear everything
         gl.enable(gl.DEPTH_TEST);           // Enable depth testing
